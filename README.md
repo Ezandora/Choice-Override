@@ -36,6 +36,7 @@ https://github.com/Ezandora/Choice-Override/branches/Release/
 Choice Zero
 ----------------
 An optional "choice.0.ash" script will operate as a general catch-all, for choices that aren't otherwise handled by other scripts.
+
 If your choice.0.ash script wants to know the choice adventure ID, run this:
 <pre>
 int choice_id = page_text.choiceOverrideDiscoverChoiceIDFromPageText();
