@@ -1,5 +1,5 @@
 //Choice Override
-//Version 1.0.
+//Version 1.0.1.
 //Written by Ezandora.
 //Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash.
 //Tested to at least 17705; probably works before then?
@@ -18,12 +18,12 @@
 //We need to pass in page text through a cli_execute("call script arguments"); command.
 //For now, we use url_encode() and url_decode().
 //We can't use visit_url() in the target script, because that will send the choice POST twice, leading to bad things.
-string decodePageText(string page_text_encoded)
+string choiceOverrideDecodePageText(string page_text_encoded)
 {
 	return url_decode(page_text_encoded);
 }
 
-string encodePageText(buffer page_text_encoded)
+string choiceOverrideEncodePageText(buffer page_text_encoded)
 {
 	return url_encode(page_text_encoded);
 }
@@ -31,7 +31,7 @@ string encodePageText(buffer page_text_encoded)
 
 
 
-int discoverChoiceIDFromPageText(buffer page_text)
+int choiceOverrideDiscoverChoiceIDFromPageText(buffer page_text)
 {
 	//Same as mafia's:
 	string [int] extraction_patterns;
@@ -54,7 +54,7 @@ int discoverChoiceIDFromPageText(buffer page_text)
 }
 
 
-boolean scriptProbablyExists(string script_name)
+boolean choiceOverrideScriptProbablyExists(string script_name)
 {
 	try
 	{
@@ -76,29 +76,29 @@ static
 	//We test against choice zero exactly once per session, because that would be an extra filesystem call otherwise.
 	boolean __tested_against_choice_zero = false;
 	boolean __choice_zero_script_exists = false;
-	void testAgainstChoiceZero()
+	void choiceOverrideTestAgainstChoiceZero()
 	{
 		if (__tested_against_choice_zero) return;
 		__tested_against_choice_zero = true;
-		__choice_zero_script_exists = scriptProbablyExists("relay/choice.0.ash");
+		__choice_zero_script_exists = choiceOverrideScriptProbablyExists("relay/choice.0.ash");
 	}
-	testAgainstChoiceZero();
+	choiceOverrideTestAgainstChoiceZero();
 }
 
 void main()
 {
 	buffer page_text = visit_url(); //Will POST automatically and such.
-	int choice_id = discoverChoiceIDFromPageText(page_text);
+	int choice_id = choiceOverrideDiscoverChoiceIDFromPageText(page_text);
 	
 	string script_name = "relay/choice." + choice_id + ".ash";
 	
-	if (scriptProbablyExists(script_name))
+	if (choiceOverrideScriptProbablyExists(script_name))
 	{
 		//Let them handle it:
-		cli_execute("call " + script_name + " " + page_text.encodePageText());
+		cli_execute("call " + script_name + " " + page_text.choiceOverrideEncodePageText());
 	}
 	else if (__choice_zero_script_exists && choice_id > 0) //catch-all
-		cli_execute("call relay/choice.0.ash " + page_text.encodePageText());
+		cli_execute("call relay/choice.0.ash " + page_text.choiceOverrideEncodePageText());
 	else
 		write(page_text);
 }
