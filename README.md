@@ -1,4 +1,4 @@
-Choice-Override
+Choice Override
 =====
 Choice Override library for KoLmafia. Allows the use of multiple choice.id.ash relay override scripts, all co-existing.
 
