@@ -31,3 +31,7 @@ When releasing your script, you'll need to add the library to a file named "depe
 <pre>
 https://github.com/Ezandora/Choice-Override/branches/Release/
 </pre>
+
+Choice Zero
+----------------
+An optional "choice.0.ash" script will operate as a general catch-all, for choices that aren't otherwise handled by other scripts.
