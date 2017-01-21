@@ -18,6 +18,7 @@ https://github.com/Ezandora/Choice-Override/branches/Release/
 Usage
 ----------------
 Copy choice.example.ash in relay/, and name it choice.choice_adventure_id.ash. [Choice adventures by number.](http://kol.coldfront.net/thekolwiki/index.php/Choice_Adventures_by_Number_(1-99))
+
 Then edit the script:
 <pre>
 import "relay/choice.ash";
