@@ -1,5 +1,5 @@
 //Choice Override
-//Version 1.0.1.
+//Version 1.0.2.
 //Written by Ezandora.
 //Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash.
 //Tested to at least 17705; probably works before then?
