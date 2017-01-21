@@ -9,12 +9,6 @@ You won't usually have to do this, unless you are developing a script for this l
 svn checkout https://github.com/Ezandora/Choice-Override/branches/Release/
 </pre>
 
-The dependencies.txt entry for svn:
-<pre>
-https://github.com/Ezandora/Choice-Override/branches/Release/
-</pre>
-
-
 Writing a new override script
 ----------------
 Copy choice.example.ash in relay/, and name it choice.choice_adventure_id.ash. [Choice adventures by number.](http://kol.coldfront.net/thekolwiki/index.php/Choice_Adventures_by_Number_(1-99))
@@ -31,4 +25,9 @@ void main(string page_text_encoded)
 	//Modify page_text as you will here.
 	write(page_text);
 }
+</pre>
+
+When releasing your script, you'll need to add the library to a file named "dependencies.txt", located in the root folder of your svn directory. It will need this line:
+<pre>
+https://github.com/Ezandora/Choice-Override/branches/Release/
 </pre>
