@@ -1,4 +1,4 @@
-import "choice.ash";
+import "relay/choice.ash";
 //Comment to allow file_to_map() to see this file:
 //Choice	override
 
