@@ -21,7 +21,7 @@ import "relay/choice.ash";
 
 void main(string page_text_encoded)
 {
-	string page_text = page_text_encoded.decodePageText();
+	string page_text = page_text_encoded.choiceOverrideDecodePageText();
 	//Modify page_text as you will here.
 	write(page_text);
 }
