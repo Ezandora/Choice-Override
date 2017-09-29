@@ -1,5 +1,5 @@
 //Choice Override
-//Version 1.0.2.
+//Version 1.0.3.
 //Written by Ezandora.
 //Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash.
 //Tested to at least 17705; probably works before then?
@@ -97,7 +97,7 @@ void main()
 		//Let them handle it:
 		cli_execute("call " + script_name + " " + page_text.choiceOverrideEncodePageText());
 	}
-	else if (__choice_zero_script_exists && choice_id > 0) //catch-all
+	else if (__choice_zero_script_exists) //catch-all
 		cli_execute("call relay/choice.0.ash " + page_text.choiceOverrideEncodePageText());
 	else
 		write(page_text);
