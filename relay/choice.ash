@@ -31,7 +31,7 @@ string choiceOverrideEncodePageText(buffer page_text_encoded)
 
 
 
-int choiceOverrideDiscoverChoiceIDFromPageText(buffer page_text)
+int choiceOverrideDiscoverChoiceIDFromPageText(string page_text)
 {
 	//Same as mafia's:
 	string [int] extraction_patterns;
