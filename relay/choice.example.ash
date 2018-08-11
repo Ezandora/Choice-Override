@@ -1,6 +1,7 @@
 import "relay/choice.ash";
 //Comment to allow file_to_map() to see this file:
 //Choice	override
+//Note that you may need to restart mafia for a new choice override script to be recognised.
 
 void main(string page_text_encoded)
 {

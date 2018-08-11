@@ -1,5 +1,5 @@
 //Choice Override
-//Version 1.0.3.
+//Version 1.0.4.
 //Written by Ezandora.
 //Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash.
 //Tested to at least 17705; probably works before then?
@@ -48,6 +48,21 @@ int choiceOverrideDiscoverChoiceIDFromPageText(string page_text)
 			continue;
 		return value.to_int();
 	}
+	//Try extracting a choice.php: (witchess)
+	
+	string [int][int] generic_matches = page_text.group_string("\"choice.php\\?([^\" ]*)\"");
+	if (generic_matches.count() > 0)
+	{
+		string first_level = generic_matches[0][1];
+		string [int][int] second_level_matches = first_level.group_string("whichchoice=([0-9]*)");
+		if (second_level_matches.count() > 0)
+		{
+			string value = second_level_matches[0][1];
+			if (is_integer(value))
+				return value.to_int();
+		}
+	}
+	
 	if (page_text.contains_text("<b>Hippy Talkin'</b>"))
 		return 798;
 	return -1;
