@@ -15,7 +15,6 @@ Copy choice.example.ash in relay/, and name it choice.choice_adventure_id.ash. [
 
 Then edit the script:
 <pre>
-//If you need this in javascript form, it's available at https://github.com/Ezandora/Choice-Override
 import "relay/choice.ash";
 
 void main(string page_text_encoded)
