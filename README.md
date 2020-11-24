@@ -1,6 +1,6 @@
 Choice Override
 =====
-Choice Override library for KoLmafia. Allows the use of multiple choice.id.ash relay override scripts, all co-existing.
+Choice Override library for KoLmafia. Allows the use of multiple choice.id.ash/choice.id.js relay override scripts, all co-existing.
 
 Installation
 ----------------
@@ -12,6 +12,7 @@ svn checkout https://github.com/Ezandora/Choice-Override/branches/Release/
 Writing a new override script
 ----------------
 Copy choice.example.ash in relay/, and name it choice.choice_adventure_id.ash. [Choice adventures by number.](http://kol.coldfront.net/thekolwiki/index.php/Choice_Adventures_by_Number_(1-99))
+Or download choice.example.js from here.
 
 Then edit the script:
 <pre>
@@ -58,4 +59,9 @@ An optional "choice.0.ash" or "choice.0.js" script will operate as a general cat
 If your choice.0 script wants to know the choice adventure ID, use this code:
 <pre>
 int choice_id = page_text.choiceOverrideDiscoverChoiceIDFromPageText();
+</pre>
+
+Or, in JavaScript:
+<pre>
+var choice_id = choice_override_script.choiceOverrideDiscoverChoiceIDFromPageText(page_text)
 </pre>
