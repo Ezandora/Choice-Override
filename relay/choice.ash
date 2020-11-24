@@ -1,22 +1,15 @@
 //Choice Override
-//Version 1.0.4.
+//Version 1.1.
 //Written by Ezandora.
-//Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash.
-//Tested to at least 17705; probably works before then?
+//Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash or choice.choice_adventure_id.js.
 //This script is in the public domain.
 
-//To develop your own relay override, copy choice.example.ash and name it choice.id.ash. So, a friar script would be choice.720.ash
 //Also supports choice.0.ash, which it will call if there aren't any other choice overrides for that adventure.
 //dependencies.txt entry: https://github.com/Ezandora/Choice-Override/branches/Release/
 
-//Design notes:
-//At the moment, we use file_to_map against ASH scripts directly. This works, if they contain a tab character.
-//However, that feels slightly unstable, and might break in the future.
-//For convenience, we'll continue using it. But in the future, we may require the presence of a tabbed file named choice.choiceid.txt.
-
 
 //We need to pass in page text through a cli_execute("call script arguments"); command.
-//For now, we use url_encode() and url_decode().
+//We use url_encode() and url_decode() for this purpose.
 //We can't use visit_url() in the target script, because that will send the choice POST twice, leading to bad things.
 string choiceOverrideDecodePageText(string page_text_encoded)
 {
@@ -27,9 +20,6 @@ string choiceOverrideEncodePageText(buffer page_text_encoded)
 {
 	return url_encode(page_text_encoded);
 }
-
-
-
 
 int choiceOverrideDiscoverChoiceIDFromPageText(string page_text)
 {
@@ -69,15 +59,15 @@ int choiceOverrideDiscoverChoiceIDFromPageText(string page_text)
 }
 
 
+
 boolean choiceOverrideScriptProbablyExists(string script_name)
 {
 	try
 	{
 		//Try to determine if that choice override exists:
 		//We could cache this, but I think mafia does that already.
-		string [string] map;
-		file_to_map(script_name, map); //in the future, we may change this to test against .txt
-		if (map.count() > 0)
+		buffer file_contents = file_to_buffer(script_name);
+		if (file_contents.length() != 0)
 			return true;
 	}
 	finally
@@ -86,34 +76,64 @@ boolean choiceOverrideScriptProbablyExists(string script_name)
 	return false;
 }
 
+//use:
+//string script_name = choiceOverrideGetFullScriptName("choice.0");
+//no extension, that is found
+string choiceOverrideGetFullScriptName(string base_script_file_name)
+{
+	string path_name_without_extension = "relay/" + base_script_file_name;
+	
+	
+	foreach extension in $strings[.ash,.js]
+	{
+		string full_path = path_name_without_extension + extension;
+		if (choiceOverrideScriptProbablyExists(full_path))
+			return full_path;
+	}
+	return "";
+	
+}
+
 static
 {
 	//We test against choice zero exactly once per session, because that would be an extra filesystem call otherwise.
 	boolean __tested_against_choice_zero = false;
-	boolean __choice_zero_script_exists = false;
-	void choiceOverrideTestAgainstChoiceZero()
-	{
-		if (__tested_against_choice_zero) return;
-		__tested_against_choice_zero = true;
-		__choice_zero_script_exists = choiceOverrideScriptProbablyExists("relay/choice.0.ash");
-	}
-	choiceOverrideTestAgainstChoiceZero();
+	string __choice_zero_script_name = "";
+	
 }
+
+void choiceOverrideTestAgainstChoiceZero()
+{
+	if (__tested_against_choice_zero) return;
+	__tested_against_choice_zero = true;
+	__choice_zero_script_name = choiceOverrideGetFullScriptName("choice.0");
+}
+
+choiceOverrideTestAgainstChoiceZero();
 
 void main()
 {
 	buffer page_text = visit_url(); //Will POST automatically and such.
 	int choice_id = choiceOverrideDiscoverChoiceIDFromPageText(page_text);
 	
-	string script_name = "relay/choice." + choice_id + ".ash";
+	string script_name = choiceOverrideGetFullScriptName("choice." + choice_id);
 	
-	if (choiceOverrideScriptProbablyExists(script_name))
+	if (script_name != "")
 	{
 		//Let them handle it:
 		cli_execute("call " + script_name + " " + page_text.choiceOverrideEncodePageText());
 	}
-	else if (__choice_zero_script_exists) //catch-all
-		cli_execute("call relay/choice.0.ash " + page_text.choiceOverrideEncodePageText());
+	else if (__choice_zero_script_name != "") //catch-all
+	{
+		if (!choiceOverrideScriptProbablyExists(__choice_zero_script_name)) //It did exist, now it doesn't.
+		{
+			//Rescan:
+			__tested_against_choice_zero = false;
+			choiceOverrideTestAgainstChoiceZero();
+		}
+		if (__choice_zero_script_name != "")
+			cli_execute("call " + __choice_zero_script_name + " " + page_text.choiceOverrideEncodePageText());
+	}
 	else
 		write(page_text);
 }
