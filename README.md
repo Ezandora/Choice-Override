@@ -32,18 +32,24 @@ void main(string page_text_encoded)
 
 Or, in javascript:
 <pre>
-function main(page_text_encoded)
+const kol = require("kolmafia")
+
+module.exports.main = function (page_text_encoded)
 {
 	//Standard inputs:
 	var choice_override_script = require("relay/choice.ash");
 	var page_text = choice_override_script.choiceOverrideDecodePageText(page_text_encoded);
+	//Uncomment if you need these:
+	//var form_fields = kol.formFields();
+	//var choice_id = choice_override_script.choiceOverrideDiscoverChoiceIDFromPageText(page_text);
 	
-	var form_fields = Lib.formFields(); //Delete this line if you don't need this.
-	var choice_id = choice_override_script.choiceOverrideDiscoverChoiceIDFromPageText(page_text); //Delete this line if you don't need this.
+	
+	
 	
 	//Modify page_text as you will here.
-	Lib.write(page_text);
+	kol.write(page_text);
 }
+
 </pre>
 
 
