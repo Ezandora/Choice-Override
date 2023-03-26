@@ -6,7 +6,7 @@ Installation
 ----------------
 You won't usually have to do this, unless you are developing a script for this library.
 <pre>
-svn checkout https://github.com/Ezandora/Choice-Override/branches/Release/
+git checkout /Ezandora/Choice-Override Release
 </pre>
 
 Writing a new override script
@@ -53,7 +53,7 @@ module.exports.main = function (page_text_encoded)
 </pre>
 
 
-When releasing your script, you'll need to add the library to a file named "dependencies.txt", located in the root folder of your svn directory. It will need this line:
+When releasing your script, you'll need to add the library to a file named "dependencies.txt", located in the root folder of your svn or git directory. It will need this line:
 <pre>
 https://github.com/Ezandora/Choice-Override/branches/Release/
 </pre>
