@@ -6,7 +6,7 @@ Installation
 ----------------
 You won't usually have to do this, unless you are developing a script for this library.
 <pre>
-git checkout /Ezandora/Choice-Override Release
+git checkout Ezandora/Choice-Override Release
 </pre>
 
 Writing a new override script
