@@ -6,7 +6,7 @@ Installation
 ----------------
 You won't usually have to do this, unless you are developing a script for this library.
 <pre>
-svn checkout https://github.com/Ezandora/Choice-Override/branches/Release/
+git checkout https://github.com/Ezandora/Choice-Override.git
 </pre>
 
 Writing a new override script
