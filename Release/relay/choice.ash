@@ -1,11 +1,11 @@
 //Choice Override
-//Version 1.1.
+//Version 1.1.1.
 //Written by Ezandora.
 //Allows for generic choice adventure overrides. Will load scripts named choice.choice_adventure_id.ash or choice.choice_adventure_id.js.
 //This script is in the public domain.
 
 //Also supports choice.0.ash, which it will call if there aren't any other choice overrides for that adventure.
-//dependencies.txt entry: https://github.com/Ezandora/Choice-Override/branches/Release/
+//dependencies.txt entry: https://github.com/Ezandora/Choice-Override.git
 
 
 //We need to pass in page text through a cli_execute("call script arguments"); command.
