@@ -53,9 +53,9 @@ module.exports.main = function (page_text_encoded)
 </pre>
 
 
-When releasing your script, you'll need to add the library to a file named "dependencies.txt", located in the root folder of your svn directory. It will need this line:
+When releasing your script, you'll need to add the library to a file named "dependencies.txt", located in the root folder of your script installation directory. It will need this line:
 <pre>
-https://github.com/Ezandora/Choice-Override/branches/Release/
+https://github.com/Ezandora/Choice-Override.git
 </pre>
 
 Choice Zero
